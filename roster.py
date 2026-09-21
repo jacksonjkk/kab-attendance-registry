@@ -68,3 +68,25 @@ def check_in(student_id, status):
     data["records"].append(record)
     save_log(data)
     return record, False
+def list_checked_in_today():
+    """Return (student, record) pairs for everyone checked in today."""
+    data = load_log()
+    today = date.today().isoformat()
+    names = {s["student_id"]: s["name"] for s in data["students"]}
+    rows = []
+    for r in data["records"]:
+        if r["date"] == today and r["status"] in VALID_STATUSES:
+            rows.append((names.get(r["student_id"], "Unknown"), r))
+    return rows
+
+
+def print_checked_in_today():
+    rows = list_checked_in_today()
+    print(f"\nStudents checked in today ({date.today().isoformat()})")
+    print("-" * 50)
+    if not rows:
+        print("Nobody has checked in yet.")
+        return
+    for name, r in rows:
+        time_part = r["timestamp"].split("T")[1]
+        print(f"{r['student_id']:<8}{name:<20}{r['status']:<9}{time_part}")
