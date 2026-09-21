@@ -1,0 +1,108 @@
+{
+  "students": [
+    {
+      "student_id": "S001",
+      "name": "Mary"
+    },
+    {
+      "student_id": "S002",
+      "name": "John"
+    },
+    {
+      "student_id": "S003",
+      "name": "Grace"
+    }
+  ],
+  "records": [
+    {
+      "student_id": "S001",
+      "date": "2026-09-14",
+      "status": "Present",
+      "timestamp": "2026-09-14T08:00:00"
+    },
+    {
+      "student_id": "S001",
+      "date": "2026-09-15",
+      "status": "Present",
+      "timestamp": "2026-09-15T08:00:00"
+    },
+    {
+      "student_id": "S001",
+      "date": "2026-09-16",
+      "status": "Present",
+      "timestamp": "2026-09-16T08:00:00"
+    },
+    {
+      "student_id": "S001",
+      "date": "2026-09-17",
+      "status": "Present",
+      "timestamp": "2026-09-17T08:00:00"
+    },
+    {
+      "student_id": "S001",
+      "date": "2026-09-18",
+      "status": "Present",
+      "timestamp": "2026-09-18T08:00:00"
+    },
+    {
+      "student_id": "S002",
+      "date": "2026-09-14",
+      "status": "Present",
+      "timestamp": "2026-09-14T08:00:00"
+    },
+    {
+      "student_id": "S002",
+      "date": "2026-09-15",
+      "status": "Absent",
+      "timestamp": "2026-09-15T08:00:00"
+    },
+    {
+      "student_id": "S002",
+      "date": "2026-09-16",
+      "status": "Absent",
+      "timestamp": "2026-09-16T08:00:00"
+    },
+    {
+      "student_id": "S002",
+      "date": "2026-09-17",
+      "status": "Absent",
+      "timestamp": "2026-09-17T08:00:00"
+    },
+    {
+      "student_id": "S002",
+      "date": "2026-09-18",
+      "status": "Present",
+      "timestamp": "2026-09-18T08:00:00"
+    },
+    {
+      "student_id": "S003",
+      "date": "2026-09-14",
+      "status": "Present",
+      "timestamp": "2026-09-14T08:00:00"
+    },
+    {
+      "student_id": "S003",
+      "date": "2026-09-15",
+      "status": "Late",
+      "timestamp": "2026-09-15T08:00:00"
+    },
+    {
+      "student_id": "S003",
+      "date": "2026-09-16",
+      "status": "Present",
+      "timestamp": "2026-09-16T08:00:00"
+    },
+    {
+      "student_id": "S003",
+      "date": "2026-09-17",
+      "status": "Absent",
+      "timestamp": "2026-09-17T08:00:00"
+    },
+    {
+      "student_id": "S003",
+      "date": "2026-09-18",
+      "status": "Present",
+      "timestamp": "2026-09-18T08:00:00"
+    }
+  ]
+}
