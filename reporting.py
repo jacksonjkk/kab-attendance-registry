@@ -38,3 +38,27 @@ def get_status(data, student_id, day):
         if r["student_id"] == student_id and r["date"] == day:
             return r["status"]
     return "Absent"
+
+
+def mark_absent(day=None):
+    """Flag every student with no record on `day` as Absent. Returns flagged students."""
+    day = day or date.today().isoformat()
+    try:
+        datetime.strptime(day, "%Y-%m-%d")
+    except ValueError:
+        raise ValueError("Date must be in YYYY-MM-DD format.")
+
+    data = load_log()
+    recorded = {r["student_id"] for r in data["records"] if r["date"] == day}
+    flagged = []
+    for student in data["students"]:
+        if student["student_id"] not in recorded:
+            data["records"].append({
+                "student_id": student["student_id"],
+                "date": day,
+                "status": "Absent",
+                "timestamp": datetime.now().isoformat(timespec="seconds"),
+            })
+            flagged.append(student)
+    save_log(data)
+    return flagged
