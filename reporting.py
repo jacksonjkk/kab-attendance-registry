@@ -83,3 +83,19 @@ def chronically_absent(data, threshold=CHRONIC_THRESHOLD):
         if rate < threshold:
             result.append((s, rate))
     return sorted(result, key=lambda item: item[1])
+
+
+def find_absence_streaks(data, min_length=3):
+    """Find runs of consecutive absent school days of at least min_length."""
+    days = get_school_days(data)
+    streaks = []
+    for s in data["students"]:
+        run = []
+        for d in days + [None]:  # None marks the end so the last run is checked
+            if d is not None and get_status(data, s["student_id"], d) == "Absent":
+                run.append(d)
+            else:
+                if len(run) >= min_length:
+                    streaks.append((s, run[0], run[-1], len(run)))
+                run = []
+    return sorted(streaks, key=lambda x: x[3], reverse=True)
