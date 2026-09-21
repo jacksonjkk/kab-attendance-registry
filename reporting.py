@@ -99,3 +99,40 @@ def find_absence_streaks(data, min_length=3):
                     streaks.append((s, run[0], run[-1], len(run)))
                 run = []
     return sorted(streaks, key=lambda x: x[3], reverse=True)
+
+
+def print_rates():
+    data = load_log()
+    days = get_school_days(data)
+    print(f"\nAttendance rates ({len(days)} school days recorded)")
+    print("-" * 40)
+    if not data["students"]:
+        print("No students found.")
+        return
+    for s in data["students"]:
+        rate = attendance_rate(data, s["student_id"])
+        print(f"{s['student_id']:<8}{s['name']:<20}{rate:>6.1f}%")
+
+
+def print_streaks(min_length=3):
+    data = load_log()
+    streaks = find_absence_streaks(data, min_length)
+    print(f"\nAbsence streaks ({min_length}+ school days in a row)")
+    print("-" * 40)
+    if not streaks:
+        print("No streaks found.")
+        return
+    for s, start, end, length in streaks:
+        print(f"{s['student_id']:<8}{s['name']:<15}{length} days ({start} to {end})")
+
+
+def print_chronic():
+    data = load_log()
+    rows = chronically_absent(data)
+    print(f"\nChronically absent students (below {CHRONIC_THRESHOLD:.0f}%)")
+    print("-" * 40)
+    if not rows:
+        print("None. Everyone is at or above the threshold.")
+        return
+    for s, rate in rows:
+        print(f"{s['student_id']:<8}{s['name']:<20}{rate:>6.1f}%")
