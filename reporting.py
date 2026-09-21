@@ -62,3 +62,24 @@ def mark_absent(day=None):
             flagged.append(student)
     save_log(data)
     return flagged
+
+
+def attendance_rate(data, student_id):
+    """(days present or late) / (total school days) * 100."""
+    days = get_school_days(data)
+    if not days:
+        return 0.0
+    attended = sum(1 for d in days if get_status(data, student_id, d) in ATTENDED)
+    return round(attended / len(days) * 100, 1)
+
+
+def chronically_absent(data, threshold=CHRONIC_THRESHOLD):
+    """Students below the threshold, lowest rate first."""
+    if not get_school_days(data):
+        return []
+    result = []
+    for s in data["students"]:
+        rate = attendance_rate(data, s["student_id"])
+        if rate < threshold:
+            result.append((s, rate))
+    return sorted(result, key=lambda item: item[1])
