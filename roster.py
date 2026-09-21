@@ -41,3 +41,30 @@ def add_student(name, student_id):
     data["students"].append(student)
     save_log(data)
     return student
+def check_in(student_id, status):
+    """Log a timestamped Present/Late record for today.
+    If the student already has a record today, update it instead of adding a second one.
+    Returns (record, was_updated)."""
+    student_id = student_id.strip().upper()
+    status = status.strip().capitalize()
+    if status not in VALID_STATUSES:
+        raise ValueError("Status must be 'Present' or 'Late'.")
+
+    data = load_log()
+    if not any(s["student_id"] == student_id for s in data["students"]):
+        raise ValueError(f"No student found with ID {student_id}.")
+
+    today = date.today().isoformat()
+    now = datetime.now().isoformat(timespec="seconds")
+
+    for record in data["records"]:
+        if record["student_id"] == student_id and record["date"] == today:
+            record["status"] = status
+            record["timestamp"] = now
+            save_log(data)
+            return record, True
+
+    record = {"student_id": student_id, "date": today, "status": status, "timestamp": now}
+    data["records"].append(record)
+    save_log(data)
+    return record, False
